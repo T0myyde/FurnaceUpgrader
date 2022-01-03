@@ -1,0 +1,6 @@
+MySQL:
+  host: "localhost"
+  database: "furnace"
+  username: "root"
+  password: "123"
+  port: '3306'

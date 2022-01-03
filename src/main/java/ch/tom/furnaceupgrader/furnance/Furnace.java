@@ -2,6 +2,7 @@ package ch.tom.furnaceupgrader.furnance;
 
 import org.bukkit.Location;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Furnace {
@@ -13,8 +14,9 @@ public class Furnace {
     private String world;
     private UUID owner;
     private Integer level;
-
-    public Furnace(Integer id, Location location, int x, int y, int z, String world, UUID owner, Integer level) {
+    public Furnace() {
+    }
+    public Furnace(Integer id, int x, int y, int z, String world, UUID owner, Integer level) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -78,5 +80,31 @@ public class Furnace {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    @Override
+    public String toString() {
+        return "Furnace{" +
+                "id=" + id +
+                ", x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                ", world='" + world + '\'' +
+                ", owner=" + owner +
+                ", level=" + level +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Furnace furnace = (Furnace) o;
+        return x == furnace.x && y == furnace.y && z == furnace.z && Objects.equals(id, furnace.id) && Objects.equals(world, furnace.world) && Objects.equals(owner, furnace.owner) && Objects.equals(level, furnace.level);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, x, y, z, world, owner, level);
     }
 }
