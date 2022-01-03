@@ -1,6 +1,6 @@
 name: Furnaceupgrader
 version: '${project.version}'
-main: ch.tom.furnaceupgrader.Furnaceupgrader
+main: ch.tom.furnaceupgrader.FurnaceUpgrade
 api-version: 1.18
 authors: [ T0myy ]
 description: This is a Plugin for the Server Mineunity.eu
