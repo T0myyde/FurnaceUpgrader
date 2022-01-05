@@ -20,7 +20,7 @@ public class MySQL {
             properties.put("user",plugin.getConfig().getString("MySQL.username"));
             properties.put("password",plugin.getConfig().getString("MySQL.password"));
             properties.put("autoReconnect", "true");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/main", properties);
+            connection = DriverManager.getConnection("jdbc:mysql://mysql.mc-host24.de:3306/db_259451", properties);
         }catch (Exception e) {
             e.printStackTrace();
         }
