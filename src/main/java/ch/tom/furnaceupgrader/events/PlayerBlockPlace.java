@@ -17,7 +17,7 @@ public class PlayerBlockPlace implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         if (event.getBlock().getType() == Material.FURNACE) {
             Block block = event.getBlock();
-            plugin.getFurnaceDAOImp().save(new Furnace(0,block.getX(), block.getY(), block.getZ(), block.getWorld().toString(), event.getPlayer().getUniqueId(), 0));
+            plugin.getFurnaceService().add(new Furnace(block.getX(), block.getY(), block.getZ(), block.getWorld().getName(), event.getPlayer().getUniqueId().toString(), 0));
         }
     }
 }

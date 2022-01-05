@@ -1,9 +1,7 @@
 package ch.tom.furnaceupgrader.furnance;
 
-import org.bukkit.Location;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Furnace {
 
@@ -12,12 +10,13 @@ public class Furnace {
     private int y;
     private int z;
     private String world;
-    private UUID owner;
+    private String owner;
     private Integer level;
     public Furnace() {
+
     }
-    public Furnace(Integer id, int x, int y, int z, String world, UUID owner, Integer level) {
-        this.id = id;
+
+    public Furnace(int x, int y, int z, String world, String owner, Integer level) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -66,11 +65,11 @@ public class Furnace {
         this.z = z;
     }
 
-    public UUID getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(UUID owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 

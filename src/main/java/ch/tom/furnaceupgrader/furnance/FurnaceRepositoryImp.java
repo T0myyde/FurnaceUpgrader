@@ -12,23 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class FurnaceDAOImp implements FurnaceDAO {
+public class FurnaceRepositoryImp implements FurnaceRepository {
     private FurnaceUpgrade plugin = FurnaceUpgrade.getInstance();
-
     @Override
     public void save(Furnace furnace) {
         try {
             Connection con = plugin.getMySQl().getConnection();
-            String sql = "INSERT INTO `furnace` (id, x,y,z,world,owner_uuid, level) VALUES(?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO `furnace` (x,y,z,world,owner_uuid, level) VALUES(?,?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
-            preparedStatement.setInt(1, furnace.getId());
-            preparedStatement.setInt(2, furnace.getX());
-            preparedStatement.setInt(3, furnace.getY());
-            preparedStatement.setInt(4, furnace.getZ());
-            preparedStatement.setString(5, furnace.getWorld());
-            preparedStatement.setString(6, furnace.getOwner().toString());
-            preparedStatement.setInt(7, furnace.getLevel());
+            preparedStatement.setInt(1, furnace.getX());
+            preparedStatement.setInt(2, furnace.getY());
+            preparedStatement.setInt(3, furnace.getZ());
+            preparedStatement.setString(4, furnace.getWorld());
+            preparedStatement.setString(5, furnace.getOwner());
+            preparedStatement.setInt(6, furnace.getLevel());
             preparedStatement.executeUpdate();
 
 
@@ -41,9 +39,10 @@ public class FurnaceDAOImp implements FurnaceDAO {
     public void update(Furnace furnace) {
         try {
             Connection con = plugin.getMySQl().getConnection();
-            String sql = "UPDATE `furnace` SET level=?";
+            String sql = "UPDATE `furnace` SET level=? WHERE id =?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, furnace.getLevel());
+            preparedStatement.setInt(2, furnace.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,15 +71,15 @@ public class FurnaceDAOImp implements FurnaceDAO {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                furnace.setId(rs.getInt("id"));
-                furnace.setLevel(rs.getInt("level"));
-                furnace.setOwner(UUID.fromString(rs.getString("owner_uuid")));
-                furnace.setWorld(rs.getString("world"));
-                furnace.setX(rs.getInt("x"));
-                furnace.setY(rs.getInt("y"));
-                furnace.setZ(rs.getInt("z"));
-            }
+                if (rs.next()) {
+                    furnace.setId(rs.getInt("id"));
+                    furnace.setLevel(rs.getInt("level"));
+                    furnace.setOwner(rs.getString("owner_uuid"));
+                    furnace.setWorld(rs.getString("world"));
+                    furnace.setX(rs.getInt("x"));
+                    furnace.setY(rs.getInt("y"));
+                    furnace.setZ(rs.getInt("z"));
+                }
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,7 +98,7 @@ public class FurnaceDAOImp implements FurnaceDAO {
             if (rs.next()) {
                 furnace.setId(rs.getInt("id"));
                 furnace.setLevel(rs.getInt("level"));
-                furnace.setOwner(UUID.fromString(rs.getString("owner_uuid")));
+                furnace.setOwner(rs.getString("owner_uuid"));
                 furnace.setWorld(rs.getString("world"));
                 furnace.setX(rs.getInt("x"));
                 furnace.setY(rs.getInt("y"));
@@ -126,7 +125,7 @@ public class FurnaceDAOImp implements FurnaceDAO {
             if (rs.next()) {
                 furnace.setId(rs.getInt("id"));
                 furnace.setLevel(rs.getInt("level"));
-                furnace.setOwner(UUID.fromString(rs.getString("owner_uuid")));
+                furnace.setOwner(rs.getString("owner_uuid"));
                 furnace.setWorld(rs.getString("world"));
                 furnace.setX(rs.getInt("x"));
                 furnace.setY(rs.getInt("y"));
@@ -152,7 +151,7 @@ public class FurnaceDAOImp implements FurnaceDAO {
                 Furnace furnace = new Furnace();
                 furnace.setId(rs.getInt("id"));
                 furnace.setLevel(rs.getInt("level"));
-                furnace.setOwner(UUID.fromString(rs.getString("owner_uuid")));
+                furnace.setOwner(rs.getString("owner_uuid"));
                 furnace.setWorld(rs.getString("world"));
                 furnace.setX(rs.getInt("x"));
                 furnace.setY(rs.getInt("y"));

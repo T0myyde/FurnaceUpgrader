@@ -3,9 +3,7 @@ package ch.tom.furnaceupgrader;
 import ch.tom.furnaceupgrader.events.PlayerBlockBreak;
 import ch.tom.furnaceupgrader.events.PlayerBlockPlace;
 import ch.tom.furnaceupgrader.events.PlayerInteract;
-import ch.tom.furnaceupgrader.furnance.Furnace;
-import ch.tom.furnaceupgrader.furnance.FurnaceDAO;
-import ch.tom.furnaceupgrader.furnance.FurnaceDAOImp;
+import ch.tom.furnaceupgrader.furnance.FurnaceService;
 import ch.tom.furnaceupgrader.mysql.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -14,13 +12,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class FurnaceUpgrade extends JavaPlugin {
 
     private static FurnaceUpgrade instance;
-    private MySQL mySQl = new MySQL();
-    private FurnaceDAOImp furnaceDAOImp = new FurnaceDAOImp();
+    private MySQL mySQl;
+    private FurnaceService furnaceService;
 
     @Override
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+        mySQl = new MySQL();
+        furnaceService = new FurnaceService();
         mySQl.startConnection();
         onInit(Bukkit.getPluginManager());
     }
@@ -44,7 +44,7 @@ public final class FurnaceUpgrade extends JavaPlugin {
         return mySQl;
     }
 
-    public FurnaceDAOImp getFurnaceDAOImp() {
-        return furnaceDAOImp;
+    public FurnaceService getFurnaceService() {
+        return furnaceService;
     }
 }

@@ -1,11 +1,13 @@
 package ch.tom.furnaceupgrader.furnance;
 
+import org.bukkit.Location;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class FurnaceService {
 
-    private FurnaceDAOImp repository = new FurnaceDAOImp();
-
+    private FurnaceRepositoryImp repository = new FurnaceRepositoryImp();
     public Furnace add (Furnace furnace) {
         this.repository.save(furnace);
         return furnace;
@@ -18,6 +20,11 @@ public class FurnaceService {
         } else {
             return null;
         }
+    }
+
+    public Furnace getFromLocation(Location location) {
+        Furnace furnace = this.repository.getFromLocation(location);
+        return furnace;
     }
 
     public void update(Furnace furnace) {

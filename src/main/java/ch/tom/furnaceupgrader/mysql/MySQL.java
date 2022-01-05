@@ -1,44 +1,47 @@
 package ch.tom.furnaceupgrader.mysql;
 
 import ch.tom.furnaceupgrader.FurnaceUpgrade;
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
-import com.mysql.cj.jdbc.MysqlDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class MySQL {
-    private MysqlDataSource dataSource = new MysqlConnectionPoolDataSource();
-    private Connection connection;
+
+    public Connection connection;
     private FurnaceUpgrade plugin = FurnaceUpgrade.getInstance();
 
     public void startConnection() {
+        Properties properties = new Properties();
         try {
-            if (connection == null) {
-                dataSource.setServerName(plugin.getConfig().getString("MySQL.host"));
-                dataSource.setPortNumber(plugin.getConfig().getInt("MySQL.port"));
-                dataSource.setDatabaseName(plugin.getConfig().getString("MySQL.database"));
-                dataSource.setUser(plugin.getConfig().getString("MySQL.username"));
-                dataSource.setPassword(plugin.getConfig().getString("MySQL.password"));
-
-                connection = dataSource.getConnection();
-            }
+            properties.put("user",plugin.getConfig().getString("MySQL.username"));
+            properties.put("password",plugin.getConfig().getString("MySQL.password"));
+            properties.put("autoReconnect", "true");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/main", properties);
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void stopConnection() {
-        if (connection != null) {
             try {
-                connection.close();
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
     }
 
     public Connection getConnection() {
-        return connection;
+        if (connection != null) {
+            return connection;
+        } else {
+            this.startConnection();
+            return connection;
+        }
     }
 }

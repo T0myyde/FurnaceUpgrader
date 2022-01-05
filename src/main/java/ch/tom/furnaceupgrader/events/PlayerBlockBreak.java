@@ -11,8 +11,6 @@ public class PlayerBlockBreak implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (plugin.getFurnaceDAOImp().getFromLocation(event.getBlock().getLocation()) != null) {
-            plugin.getFurnaceDAOImp().delete(plugin.getFurnaceDAOImp().getFromLocation(event.getBlock().getLocation()));
-        }
+        if (plugin.getFurnaceService().getFromLocation(event.getBlock().getLocation()) != null) {}
      }
 }

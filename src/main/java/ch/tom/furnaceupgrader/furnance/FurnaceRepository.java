@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import java.util.List;
 import java.util.UUID;
 
-public interface FurnaceDAO {
+public interface FurnaceRepository {
     void save(Furnace furnace);
     void update(Furnace furnace);
     void delete(Furnace furnace);
