@@ -98,9 +98,9 @@ public class PlayerInteract implements Listener {
                             furnace.setCookTime((short) (furnace.getCookTime() + speedUp));
                             furnace.update();
                         } else {
+                            //STOP AND START IN THE LAST TIK
                             cancel();
                         }
-
                     } else {
                         cancel();
                     }
